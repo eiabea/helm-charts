@@ -95,14 +95,16 @@ spec:
             - {{ .Values.settings.apiMode.relayerType }}
             - --relayer-endpoint
             - {{ .Values.settings.apiMode.relayerEndpoint }}
-          {{- else }}
+          {{- end }}
+          {{- if .Values.settings.remoteDbConfig.enabled }}
             - start
-            {{- if .Values.settings.remoteDbConfig.enabled }}
             - --remote-signer-url
             - {{ .Values.settings.remoteDbConfig.remoteSignerUrl }}
-            {{- end }}
           {{- end }}
           {{- if .Values.settings.hcVaultConfig.enabled }}
+            - start-hashi-vault
+            - --network
+            - {{ .Values.settings.network }}
             - --hashi-vault-url
             - {{ .Values.settings.hcVaultConfig.hcVaultUrl }}
             - --hashi-vault-token
